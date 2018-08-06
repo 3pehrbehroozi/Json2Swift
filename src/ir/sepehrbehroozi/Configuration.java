@@ -25,7 +25,7 @@ public class Configuration {
                         .setStringParser(JSAP.STRING_PARSER)
                         .setRequired(false)
                         .setShortFlag('n')
-                        .setLongFlag("nam-map"),
+                        .setLongFlag("name-map"),
                 new FlaggedOption(SOURCE_PATH_ID)
                         .setStringParser(JSAP.STRING_PARSER)
                         .setRequired(true)
