@@ -1,4 +1,6 @@
 # Json2Swift
+[![Build Status](https://travis-ci.com/3pehrbehroozi/Json2Swift.svg?branch=master)](https://travis-ci.com/3pehrbehroozi/Json2Swift)
+
 ### Simple cli tool converting json object to swift models.
 
 ## Download
