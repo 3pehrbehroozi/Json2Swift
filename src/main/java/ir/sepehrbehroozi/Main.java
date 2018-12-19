@@ -1,5 +1,6 @@
 package ir.sepehrbehroozi;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -34,7 +35,7 @@ public class Main {
             writeFileHeaderComments(writer, outFile.getName());
             writer.write("import Foundation\n\n");
 
-            SwiftClass mainClass = getClass(inputJson, configuration.getBaseClassName());
+            SwiftClass mainClass = getClass(inputJson, configuration.getBaseClassName(), 0);
 
             writer.write(mainClass.toString());
 
@@ -49,25 +50,65 @@ public class Main {
     }
 
 
-    public static SwiftClass getClass(JSONObject json, String name) {
+    public static SwiftClass getClass(JSONObject json, String name, int level) {
         SwiftClass result = new SwiftClass();
         result.setName(name);
+        result.setLevel(level);
         List<SwiftVariable> variables = new ArrayList<>();
 
         for (String key : json.keySet()) {
             SwiftVariable variable = new SwiftVariable();
             variable.isOptional = true;
-            variable.name = key;
+            variable.name = Utils.toLowerCaseFirstChar(key);
+            variable.key = key;
             ValueType type = ValueType.getValueTypeOf(json.get(key));
             variable.valueType = type;
 
             if (type == ValueType.OBJECT) {
-                SwiftClass objectClass = getClass(json.getJSONObject(key), key);
+                SwiftClass objectClass = getClass(json.getJSONObject(key), key, level + 1);
+                objectClass.setLevel(level + 1);
                 variable.type = objectClass.name;
                 result.innerClasses.add(objectClass);
             } else if (type == ValueType.ARRAY) {
-                // TODO: 8/1/18 add array support
-                continue;
+
+
+                JSONArray array = json.getJSONArray(key);
+                if(array.length() > 0) {
+                    Object firstObject = array.get(0);
+                    ValueType firstType = ValueType.getValueTypeOf(firstObject);
+                    if(firstType == ValueType.OBJECT) {
+                        SwiftClass objectClass = getClass((JSONObject) firstObject, key, level + 1);
+                        objectClass.setLevel(level + 1);
+                        variable.type = objectClass.name;
+                        result.innerClasses.add(objectClass);
+                    } else if(firstType == ValueType.UNKNOWN) {
+                        continue;
+                    } else if(firstType == ValueType.ARRAY) {
+                        continue;
+                    } else {
+                        variable.type = firstType.getSwiftTypeString();
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             } else if (type == ValueType.UNKNOWN) {
                 continue;
             } else {

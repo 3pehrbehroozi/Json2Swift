@@ -70,7 +70,7 @@ public class Configuration {
         destPath = config.getString(DEST_PATH_ID);
         verbose = config.getBoolean(VERBOSE_ID);
         baseClassName = config.getString(BASE_CLASS_NAME_ID);
-        if (baseClassName == null) {
+        if (baseClassName == null && destPath != null) {
             File tFile = new File(destPath);
             baseClassName = Utils.toUpperCaseFirstChar(tFile.getName().substring(0, tFile.getName().lastIndexOf('.')));
         }

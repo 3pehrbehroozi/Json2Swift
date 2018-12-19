@@ -10,6 +10,9 @@ Download the latest jar [here](https://github.com/3pehrbehroozi/Json2Swift/relea
 java -jar Json2Swift.jar -s /path/to/json/file -d /path/to/SwiftFile.swift
 ```
 
+##### Note for arrays: 
+currently arrays are parsed by their first child type. Multi type in array and empty arrays are not supported and will not be parsed to Swift class.  
+
 ## Options
 | short flag | long flag         | Description                                                                                              |
 |:----------:|-------------------|----------------------------------------------------------------------------------------------------------|
