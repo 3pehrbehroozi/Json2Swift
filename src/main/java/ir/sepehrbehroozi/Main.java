@@ -9,18 +9,38 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static ir.sepehrbehroozi.Utils.getObjectFrom;
 import static ir.sepehrbehroozi.Utils.writeFileHeaderComments;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class Main {
 
     public static void main(String[] args) {
         Configuration configuration = new Configuration(args);
 
+        if(configuration.getSourcePath() == null) {
+            System.out.print("Source json file path: ");
+            Scanner scanner = new Scanner(System.in);
+            configuration.setSourcePath(scanner.nextLine());
+        }
+
+        if(configuration.getDestPath() == null) {
+            System.out.print("Destination swift file path: ");
+            Scanner scanner = new Scanner(System.in);
+            configuration.setDestPath(scanner.nextLine());
+        }
+
+
         JSONObject inputJson = getObjectFrom(configuration.getSourcePath());
         if (inputJson == null) {
-            print("Object is null");
+            print("Error: Invalid input json file. File is unreadable or it has not json content inside!");
+            return;
+        }
+
+        if(configuration.getDestPath().isEmpty()) {
+            print("Error: Invalid output swift file.");
             return;
         }
 
@@ -89,26 +109,6 @@ public class Main {
                         variable.type = firstType.getSwiftTypeString();
                     }
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             } else if (type == ValueType.UNKNOWN) {
                 continue;
             } else {

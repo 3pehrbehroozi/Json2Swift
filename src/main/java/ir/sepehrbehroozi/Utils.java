@@ -43,7 +43,7 @@ public class Utils {
         writer.write("//\n");
         writer.write(String.format(Locale.ENGLISH, "//\t%s\n", fileName));
         writer.write("//\tCreated by SJsonToSwift script\n");
-        writer.write("//\tFork me on github: http://github.com/3pehrbehroozi/qwe\n");
+        writer.write("//\tFork me on github: https://github.com/3pehrbehroozi/Json2Swift\n");
         writer.write("//\n\n");
     }
 }
