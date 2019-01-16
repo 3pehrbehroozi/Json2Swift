@@ -68,10 +68,10 @@ public class SwiftClass {
         for (SwiftVariable variable : variables) {
             if (variable.valueType == ValueType.OBJECT) {
                 result.append(tabs(2)).append("result.").append(variable.name).append(" = ");
-                result.append(variable.type).append(".from(json: getJsonObject(object, [\"").append(variable.key).append("\"])").append("\n");
+                result.append(variable.type).append(".from(json: getJsonObject(object, [\"").append(variable.key).append("\"]))").append("\n");
             } else if (variable.valueType == ValueType.ARRAY) {
                 result.append(tabs(2)).append("result.").append(variable.name).append(" = ");
-                result.append(variable.type).append(".from(json: getJsonArray(object, [\"").append(variable.key).append("\"])").append("\n");
+                result.append(variable.type).append(".from(json: getJsonArray(object, [\"").append(variable.key).append("\"]))").append("\n");
             } else if (variable.valueType == ValueType.UNKNOWN) {
                 continue;
             } else {
@@ -84,7 +84,7 @@ public class SwiftClass {
 
 
         result.append(tabs(1)).append(String.format(Locale.ENGLISH, "class func from(json array: JSONArray?) -> [%s] {\n", name));
-        result.append(tabs(2)).append(String.format(Locale.ENGLISH, "return (array ?? JSONArray()).map { %s.from(json: $0 as? JSONObject) }.filter { $0 != nil }.map { $0! }\n", name));
+        result.append(tabs(2)).append(String.format(Locale.ENGLISH, "return (array ?? JSONArray()).compactMap { %s.from(json: $0 as? JSONObject) }\n", name));
         result.append(tabs(1)).append("}\n\n");
 
 

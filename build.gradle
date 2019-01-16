@@ -1,9 +1,20 @@
 apply plugin: 'idea'
 //and standard one
 apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 repositories {
     mavenCentral()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.3'
+    }
 }
 
 dependencies {
@@ -17,5 +28,11 @@ sourceSets {
         java {
             srcDirs = ["src/test/java"]
         }
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ir.sepehrbehroozi.Main'
     }
 }

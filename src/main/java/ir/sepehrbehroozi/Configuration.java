@@ -96,6 +96,26 @@ public class Configuration {
         return baseClassName;
     }
 
+    public void setNameMap(String nameMap) {
+        this.nameMap = nameMap;
+    }
+
+    public void setSourcePath(String sourcePath) {
+        this.sourcePath = sourcePath;
+    }
+
+    public void setDestPath(String destPath) {
+        this.destPath = destPath;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
+    }
+
+    public void setBaseClassName(String baseClassName) {
+        this.baseClassName = baseClassName;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
